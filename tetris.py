@@ -411,7 +411,6 @@ while True:
 
     # check if bottom row is full
 
-
     rows_to_clear = []
     for y in range(23, -1, -1):
         is_full = True
@@ -422,6 +421,8 @@ while True:
             rows_to_clear.append(y)
         
     if len(rows_to_clear) != 0:
+        # new shape when we drop blocks
+        shape = Shape()
         score += 10 * len(rows_to_clear)
         for _ in range(len(rows_to_clear)):
             for new_y in range(rows_to_clear[len(rows_to_clear)-1]-1, -1, -1):
