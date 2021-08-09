@@ -375,7 +375,7 @@ while True:
                             # print("Nice" + str(x) + " " + str(crd))
                             # print(str(shape.y + y + 1) + " " + str(shape.x + x))
                             if theHeight < shape.height -1:
-                                if x_stopped_at != x:
+                                if x_stopped_at != x and not (x > x_stopped_at and y == y_stopped_at) :
                                     grid[shape.y + theHeight + 1][shape.x + x] = 0
 
                             if y == y_stopped_at and x < x_stopped_at and grid[shape.y + y +1][shape.x + x] != 0 and shape.shape[y][x] != 0:
