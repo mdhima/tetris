@@ -1,6 +1,7 @@
 import turtle
 import time
 import random
+import copy
 
 screen = turtle.Screen()
 screen.title('Tetris by Magdalena Dhima')
@@ -50,7 +51,7 @@ class Shape():
 
         self.height = len(self.shape)
         self.width = len(self.shape[0])
-        print(self.height, self.width)
+        # print(self.height, self.width)
 
 
 
@@ -173,7 +174,7 @@ class Shape():
 
             cantMove, x_stopped_at, y_stopped_at = moveShapeRight()
             if cantMove:
-                print("ahh")
+                # print("ahh")
                 self.x -= 1
                 for y in range(self.height):
                     if self.y + y >= 0:
@@ -204,34 +205,33 @@ class Shape():
                     if(self.shape[y][x]==1):
                         grid[self.y + y][self.x + x] = 0
 
-    def can_rotate(self, grid, shape):
-        print(grid)
+    def can_rotate(self, grid, shape, old_shape):
         for y in range(len(shape)):
-            if self.y + y >= 0:
+            if self.y + y < 24 and self.x + len(shape[0]) < len(grid[0]) and self.y + len(shape) < len(grid):
                 for x in range(len(shape[0])):
-                    print(shape)
-                    print(str(self.y + y) + "," + str(self.x + x))
-                    if shape[y][x] == 1 and grid[self.y + y][self.x + x] != 0:
+                    # print(shape)
+                    # print(str(self.y + y) + "," + str(self.x + x))
+                    if shape[y][x] == 1 and grid[self.y + y][self.x + x] != 0 and old_shape[y][x] == 0:
                         return False
+            else:
+                return False
         return True
 
     def rotate(self, grid):
-        # first erase the shape
-        self.erase_shape(grid)
+        old_shape = copy.deepcopy(self.shape)
         rotated_shape = []
         for x in range(self.width):
             new_row = []
             for y in range(self.height-1, -1, -1):
                 new_row.append(self.shape[y][x])
             rotated_shape.append(new_row)
-
-        right_side = self.x + len(rotated_shape[0])
-        if right_side < len(grid[0]):  
-            if self.can_rotate(grid, rotated_shape):
-                self.shape = rotated_shape
-                # Update the height and width
-                self.height = len(self.shape)
-                self.width = len(self.shape[0])
+        # first erase the shape 
+        if self.can_rotate(grid, rotated_shape, old_shape):
+            self.erase_shape(grid)
+            print("YA")
+            self.shape = rotated_shape
+            self.height = len(self.shape)
+            self.width = len(self.shape[0])
         # if self.can_rotate(grid, rotated_shape):
         #     self.shape = rotated_shape
 
@@ -356,7 +356,7 @@ while True:
         # delay = 0.5
         cantMove, x_stopped_at, y_stopped_at = moveShape()
         if cantMove:
-            time.sleep(1)
+            # time.sleep(1)
             # print("here")
             # print(grid)
             shape.y -= 1
@@ -397,7 +397,7 @@ while True:
                 
 
             # print(grid)
-            time.sleep(1)
+            # time.sleep(1)
             shape = Shape()
             # print("New Shape")
             # print(grid)
@@ -405,7 +405,7 @@ while True:
         # print(str(shape.y) + "," + str(shape.x))
         # print(grid)
     else:
-        time.sleep(1)
+        # time.sleep(1)
         shape = Shape()
         # print("New Shape")
 
