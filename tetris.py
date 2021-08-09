@@ -411,26 +411,26 @@ while True:
 
     # check if bottom row is full
 
-    rows_to_clear = []
-    for y in range(23, -1, -1):
-        is_full = True
-        for x in range(12):
-            if grid[y][x] == 0:
-                is_full = False
-        if is_full:
-            rows_to_clear.append(y)
-        
-    if len(rows_to_clear) != 0:
-        # new shape when we drop blocks
-        shape = Shape()
-        score += 10 * len(rows_to_clear)
-        for _ in range(len(rows_to_clear)):
-            for new_y in range(rows_to_clear[len(rows_to_clear)-1]-1, -1, -1):
-                for new_x in range(12):
-                    grid[new_y+1][new_x] = grid[new_y][new_x]
-                    # print(grid)
+    if shape.y == -2:
+        rows_to_clear = []
+        for y in range(23, -1, -1):
+            is_full = True
+            for x in range(12):
+                if grid[y][x] == 0:
+                    is_full = False
+            if is_full:
+                rows_to_clear.append(y)
+            
+        if len(rows_to_clear) != 0:
+            # new shape when we drop blocks
+            score += 10 * len(rows_to_clear)
+            for _ in range(len(rows_to_clear)):
+                for new_y in range(rows_to_clear[len(rows_to_clear)-1]-1, -1, -1):
+                    for new_x in range(12):
+                        grid[new_y+1][new_x] = grid[new_y][new_x]
+                        # print(grid)
 
-            rows_to_clear.pop()
+                rows_to_clear.pop()
     
     # draw the screen
     draw_grid(pen, grid)
