@@ -275,7 +275,12 @@ def draw_grid(pen, grid):
 def draw_score(pen, score):
     pen.color("blue")
     pen.hideturtle()
-    pen.goto(-75, 350)
+    pen.goto(-50, 350)
+    if isinstance(score, str):
+        pen.clear()
+        pen.goto(-75, 0)
+        pen.write("{}".format(score), move=False, align="left", font=("Arial", 24, "normal"))
+        return
     pen.write("Score: {}".format(score), move=False, align="left", font=("Arial", 24, "normal"))
 
     
